@@ -1,7 +1,6 @@
 import subprocess
 import time
 import requests
-import time
 
 class OllamaServer:
     """
@@ -37,7 +36,7 @@ class OllamaServer:
         
     def is_running(self) -> bool:
         try:
-            resp = requests.get("http://localhost:11434/api/tags", timeout=1)
+            resp = requests.get("http://localhost:11434/api/tags", timeout=5)
             return resp.status_code == 200
         except Exception:
             return False

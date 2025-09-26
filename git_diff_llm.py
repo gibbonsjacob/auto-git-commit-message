@@ -233,11 +233,6 @@ def generate_commit_message(server: OllamaServer, llm: HelperLLM, diff_text, mod
 
     pid = None
     pid = server.get_pid()
-    filtered_diff_text, append_note = preprocess_diff(diff_text)
-    response = llm.generate(filtered_diff_text)
-    print('response done')
-    if append_note:
-        response += " and updated documentation"
     try:
 
         
