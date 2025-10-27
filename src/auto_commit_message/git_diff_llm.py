@@ -253,14 +253,12 @@ def generate_commit_message(server: OllamaServer, llm: HelperLLM, diff_text, mod
 
 
 
-def main(args):
+def main(diff_text: str | None = None):
     model_name = "hf.co/bartowski/Meta-Llama-3.1-8B-Instruct-GGUF:Q4_K_M"
     server = OllamaServer(model_name)
     server.start()
-    if args.diff:
-        with open(args.diff, "r") as f:
-            diff_text = f.read()
-    else:
+
+    if diff_text is None:
         import sys
         diff_text = sys.stdin.read()
 
@@ -269,19 +267,26 @@ def main(args):
         exit(1)
     
     llm = HelperLLM(model_name=model_name)
-
     commit_msg = generate_commit_message(server, llm, diff_text, model_name)
-
     
     print(f"Generated Commit Message: {commit_msg}")
     copy_to_clipboard(commit_msg)
     server.stop()
+    return commit_msg
 
 
-
-if __name__ == "__main__":
+def main_cli():
     parser = argparse.ArgumentParser(description="Generate a commit message from staged git diff")
     parser.add_argument("--diff", type=str, help="Optional path to file with git diff (defaults to stdin)")
     args = parser.parse_args()
-    main(args)
+    
+    diff_text = None
+    if args.diff:
+        with open(args.diff, "r") as f:
+            diff_text = f.read()
+    main(diff_text)
+
+
+if __name__ == "__main__":
+    main_cli()
 
