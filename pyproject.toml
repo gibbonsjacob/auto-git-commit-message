@@ -10,3 +10,6 @@ dependencies = [
     "langchain-ollama>=0.3.8",
     "psutil>=7.1.0",
 ]
+
+[tool.setuptools.packages.find]
+where = ["src"]
