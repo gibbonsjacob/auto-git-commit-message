@@ -4,7 +4,7 @@ from langchain_core.runnables import Runnable
 from langchain_ollama import ChatOllama
 from langchain.schema import HumanMessage, SystemMessage
 from typing import Union, Optional, Dict, Any
-from src.server_utils import OllamaServer
+from src.auto_commit_message.server_utils import OllamaServer
 import argparse
 import re
 import subprocess
